@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 scoreOrigPos, scoreOrigAnchorMin, scoreOrigAnchorMax;
     private Vector2 buttonOrigPos, buttonOrigAnchorMin, buttonOrigAnchorMax;
 
+    //To reset camera
+    public Transform gameCamera;
+
     void Start()
     {
         Application.targetFrameRate = 30;
@@ -179,5 +182,8 @@ public class PlayerMovement : MonoBehaviour
             restartButtonRect.anchorMax = buttonOrigAnchorMax;
             restartButtonRect.anchoredPosition = buttonOrigPos;
         }
+
+        // Reset camera to starting position
+        gameCamera.position = new Vector3(0.47f, 1f, -36.1f);
     }
 }
