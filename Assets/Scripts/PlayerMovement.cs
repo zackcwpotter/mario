@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 25;
     public float maxSpeed = 30;
     public float upSpeed = 10;
-    public float jumpBufferTime = 0.2f;
 
     public TextMeshProUGUI scoreText;
     public GameObject enemies;
@@ -19,9 +18,11 @@ public class PlayerMovement : MonoBehaviour
     public RectTransform scoreTextRect;
     public RectTransform restartButtonRect;
 
+    // for animation
+    public Animator marioAnimator;
+
     private Rigidbody2D marioBody;
-    private float jumpBufferCounter;
-    private bool onGroundState = false;
+    private bool onGroundState = true; 
     private SpriteRenderer marioSprite;
     private bool faceRightState = true;
     private Vector3 startPosition;
@@ -32,6 +33,18 @@ public class PlayerMovement : MonoBehaviour
 
     //To reset camera
     public Transform gameCamera;
+    
+    // for audio
+    public AudioSource marioAudio;
+
+    // --- NEWLY ADDED VARIABLES ---
+    public AudioClip marioDeath;
+    public float deathImpulse = 15;
+
+    // state
+    [System.NonSerialized]
+    public bool alive = true;
+    // -----------------------------
 
     void Start()
     {
@@ -58,85 +71,119 @@ public class PlayerMovement : MonoBehaviour
             buttonOrigAnchorMin = restartButtonRect.anchorMin;
             buttonOrigAnchorMax = restartButtonRect.anchorMax;
         }
+
+        // update animator state
+        marioAnimator.SetBool("onGround", onGroundState);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown("a") && faceRightState)
+        if (alive)
         {
-            faceRightState = false;
-            marioSprite.flipX = true;
-        }
+            if (Input.GetKeyDown("a") && faceRightState)
+            {
+                faceRightState = false;
+                marioSprite.flipX = true;
+                if (marioBody.linearVelocity.x > 0.1f)
+                    marioAnimator.SetTrigger("onSkid");
+            }
 
-        if (Input.GetKeyDown("d") && !faceRightState)
-        {
-            faceRightState = true;
-            marioSprite.flipX = false;
-        }
+            if (Input.GetKeyDown("d") && !faceRightState)
+            {
+                faceRightState = true;
+                marioSprite.flipX = false;
+                if (marioBody.linearVelocity.x < -0.1f)
+                    marioAnimator.SetTrigger("onSkid");
+            }
 
-        if (Input.GetKeyDown("space"))
-        {
-            jumpBufferCounter = jumpBufferTime;
-        }
-        else
-        {
-            jumpBufferCounter -= Time.deltaTime;
+            marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.linearVelocity.x));
         }
     }
 
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxisRaw("Horizontal");
-
-        if (Mathf.Abs(moveHorizontal) > 0)
+        if (alive)
         {
-            Vector2 movement = new Vector2(moveHorizontal, 0);
+            float moveHorizontal = Input.GetAxisRaw("Horizontal");
 
-            if (Mathf.Abs(marioBody.linearVelocity.x) < maxSpeed)
+            if (Mathf.Abs(moveHorizontal) > 0)
             {
-                marioBody.AddForce(movement * speed);
-            }
-        }
+                Vector2 movement = new Vector2(moveHorizontal, 0);
 
-        if (jumpBufferCounter > 0f && onGroundState)
-        {
-            marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
-            onGroundState = false;
-            jumpBufferCounter = 0f;
+                if (Mathf.Abs(marioBody.linearVelocity.x) < maxSpeed)
+                {
+                    marioBody.AddForce(movement * speed);
+                }
+            }
+
+            // Tutorial jumping logic
+            if (Input.GetKeyDown("space") && onGroundState)
+            {
+                marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
+                onGroundState = false;
+                // update animator state
+                marioAnimator.SetBool("onGround", onGroundState);
+            }
         }
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Ground")) onGroundState = true;
+        // Tutorial ground detection logic
+        if (col.gameObject.CompareTag("Ground"))
+        {
+            onGroundState = true;
+            // update animator state
+            marioAnimator.SetBool("onGround", onGroundState);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && alive)
         {
-            Time.timeScale = 0.0f;
+            Debug.Log("Collided with goomba!");
 
-            if (gameOverPanel != null)
-            {
-                gameOverPanel.SetActive(true);
-            }
+            // Disable collider so he falls through the ground
+            GetComponent<Collider2D>().enabled = false;
 
-            // 3. Move the UI to the center when Mario dies
-            if (scoreTextRect != null)
-            {
-                scoreTextRect.anchorMin = new Vector2(0.5f, 0.5f);
-                scoreTextRect.anchorMax = new Vector2(0.5f, 0.5f);
-                // Moves it 20 pixels above the exact center
-                scoreTextRect.anchoredPosition = new Vector2(0, 20);
-            }
-            if (restartButtonRect != null)
-            {
-                restartButtonRect.anchorMin = new Vector2(0.5f, 0.5f);
-                restartButtonRect.anchorMax = new Vector2(0.5f, 0.5f);
-                // Moves it 60 pixels below the exact center
-                restartButtonRect.anchoredPosition = new Vector2(0, -100);
-            }
+            // play death animation
+            marioAnimator.Play("mario-die");
+            marioAudio.PlayOneShot(marioDeath);
+            alive = false;
+        }
+    }
+
+    void PlayDeathImpulse()
+    {
+        marioBody.AddForce(Vector2.up * deathImpulse, ForceMode2D.Impulse);
+    }
+
+    void GameOverScene()
+    {
+        // stop time
+        Time.timeScale = 0.0f;
+
+        // Trigger the game over screen (Moved from the old OnTriggerEnter2D)
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+        }
+
+        // 3. Move the UI to the center when Mario dies
+        if (scoreTextRect != null)
+        {
+            scoreTextRect.anchorMin = new Vector2(0.5f, 0.5f);
+            scoreTextRect.anchorMax = new Vector2(0.5f, 0.5f);
+            // Moves it 20 pixels above the exact center
+            scoreTextRect.anchoredPosition = new Vector2(0, 20);
+        }
+        if (restartButtonRect != null)
+        {
+            restartButtonRect.anchorMin = new Vector2(0.5f, 0.5f);
+            restartButtonRect.anchorMax = new Vector2(0.5f, 0.5f);
+            // Moves it 100 pixels below the exact center
+            restartButtonRect.anchoredPosition = new Vector2(0, -100);
         }
     }
 
@@ -148,7 +195,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void ResetGame()
     {
+        // Re-enable collider for the new game
+        GetComponent<Collider2D>().enabled = true;
+
+        // reset position (using your dynamic startPosition instead of hardcoding the Vector3)
         marioBody.transform.position = startPosition;
+        
         faceRightState = true;
         marioSprite.flipX = false;
         scoreText.text = "Score: 0";
@@ -185,5 +237,17 @@ public class PlayerMovement : MonoBehaviour
 
         // Reset camera to starting position
         gameCamera.position = new Vector3(0.47f, 1f, -36.1f);
+
+        // reset animation and state
+        marioAnimator.SetTrigger("gameRestart");
+        alive = true;
+    }
+
+    void PlayJumpSound()
+    {
+        if (marioBody.linearVelocity.y > 0.1f)
+        {
+            marioAudio.PlayOneShot(marioAudio.clip);
+        }
     }
 }
