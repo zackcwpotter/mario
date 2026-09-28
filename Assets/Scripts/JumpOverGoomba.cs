@@ -70,5 +70,11 @@ public class JumpOverGoomba : MonoBehaviour
             return false;
         }
     }
-    
+    // helper
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawCube(transform.position - transform.up * maxDistance, boxSize);
+    }
+
 }
