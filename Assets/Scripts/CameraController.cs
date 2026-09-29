@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
     private float endX; // largest x-coordinate of the camera
     private float viewportHalfWidth;
 
-    void Start()  //Set camera boundaries from start
+    void Start()
     {
         Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0));
 
@@ -24,6 +24,8 @@ public class CameraController : MonoBehaviour
         startX = this.transform.position.x;
 
         endX = endLimit.transform.position.x - viewportHalfWidth;
+
+        Debug.Log("startX: " + startX + " | endX: " + endX + " | halfWidth: " + viewportHalfWidth);
     }
 
     void Update()
@@ -31,15 +33,15 @@ public class CameraController : MonoBehaviour
         // Calculate where the camera should be based on Mario's position
         float desiredX = player.position.x + offset;
 
-        //Follow mario within the boundaries
-        if (desiredX > startX && desiredX < endX)
-        {
-            this.transform.position = new Vector3(
-                desiredX,
-                this.transform.position.y,
-                this.transform.position.z
-            );
-        }
+        // Keep the camera between the start and end boundaries
+        float clampedX = Mathf.Clamp(desiredX, startX, endX);
+
+        // Follow Mario on the x-axis
+        this.transform.position = new Vector3(
+            clampedX,
+            this.transform.position.y,
+            this.transform.position.z
+        );
     }
 
 }
