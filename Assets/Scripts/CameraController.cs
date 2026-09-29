@@ -1,31 +1,30 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    public Transform player;   // Mario's Transform
+    public Transform endLimit; // Marks the right end of the level
 
-    public Transform player; // Mario's Transform
-    public Transform endLimit; // GameObject that indicates end of map
-    private float offset; // initial x-offset between camera and Mario
-    private float startX; // smallest x-coordinate of the Camera
-    private float endX; // largest x-coordinate of the camera
-    private float viewportHalfWidth;
+    private float offset;            // Initial x-offset between camera and Mario
+    private float startX;            // Leftmost camera position
+    private float endX;              // Rightmost camera position
+    private float viewportHalfWidth; // Half of the camera's visible width
 
     void Start()
     {
-        Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0));
+        // Calculate half of the camera's visible width
+        viewportHalfWidth = Camera.main.orthographicSize * Camera.main.aspect;
 
-        viewportHalfWidth = Mathf.Abs(bottomLeft.x - this.transform.position.x);
+        // Keep the initial distance between Mario and the camera
+        offset = transform.position.x - player.position.x;
 
-        offset = this.transform.position.x - player.position.x;
+        // Camera cannot move further left than its starting position
+        startX = transform.position.x;
 
-        startX = this.transform.position.x;
-
-        endX = endLimit.transform.position.x - viewportHalfWidth;
-
-        Debug.Log("startX: " + startX + " | endX: " + endX + " | halfWidth: " + viewportHalfWidth);
+        // Camera stops before showing anything beyond EndLimit
+        endX = endLimit.position.x - viewportHalfWidth;
     }
 
     void Update()
@@ -33,16 +32,14 @@ public class CameraController : MonoBehaviour
         // Calculate where the camera should be based on Mario's position
         float desiredX = player.position.x + offset;
 
-        // Keep the camera between the start and end boundaries
+        // Keep the camera between the start and end of the level
         float clampedX = Mathf.Clamp(desiredX, startX, endX);
 
-        // Follow Mario on the x-axis
-        this.transform.position = new Vector3(
+        // Follow Mario only on the x-axis
+        transform.position = new Vector3(
             clampedX,
-            this.transform.position.y,
-            this.transform.position.z
+            transform.position.y,
+            transform.position.z
         );
     }
-
 }
-
