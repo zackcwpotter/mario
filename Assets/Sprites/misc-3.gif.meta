@@ -474,6 +474,50 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: misc-3_2
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 1201
+        width: 48
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adf780b385dcf1d47bf6aa3d2d19325b
+      internalID: -894994525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: misc-3_3
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 913
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4720d5f5af9df3840bdc001da06abaad
+      internalID: 1949458612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -498,6 +542,8 @@ TextureImporter:
       goomba: 2021442919
       misc-3_0: -293349007
       misc-3_1: 436808072
+      misc-3_2: -894994525
+      misc-3_3: 1949458612
       mushroom: 1199412830
       pipe_body: 95445106
       pipe_head: 1383931381
