@@ -1955,8 +1955,8 @@ MonoBehaviour:
   marioAnimator: {fileID: 798308029}
   gameCamera: {fileID: 519420032}
   marioAudio: {fileID: 798308030}
-  marioDeath: {fileID: 0}
-  deathImpulse: 15
+  marioDeath: {fileID: 8300000, guid: 91629a06e28065547b865f91af03d034, type: 3}
+  deathImpulse: 40
 --- !u!50 &798308026
 Rigidbody2D:
   serializedVersion: 5
