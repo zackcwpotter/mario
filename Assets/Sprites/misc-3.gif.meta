@@ -505,7 +505,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -514,6 +514,116 @@ TextureImporter:
       bones: []
       spriteID: 4720d5f5af9df3840bdc001da06abaad
       internalID: 1949458612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: misc-3_4
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 833
+        width: 29
+        height: 109
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8211bec95b6d83d4c8c0199ec356234c
+      internalID: -1712528339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: question_blink
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 1057
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a962b98817941864fa1695228b3e1dff
+      internalID: 545259248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: coin_spin1
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 1093
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42ee528b9543c4f4893e8d0ec0924c78
+      internalID: -1736433935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: misc-3_5
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 782
+        width: 23
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47c9497bd69b3a34782e95a30cd2cd56
+      internalID: 1163410058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: used_box
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 1152
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6683dd912f293ce49afe64e37723b23b
+      internalID: -2030686666
       vertices: []
       indices: 
       edges: []
@@ -539,17 +649,22 @@ TextureImporter:
       big_hill: -1214603271
       brownFloor: 1094453920
       coin: 263555830
+      coin_spin1: -1736433935
       goomba: 2021442919
       misc-3_0: -293349007
       misc-3_1: 436808072
       misc-3_2: -894994525
       misc-3_3: 1949458612
+      misc-3_4: -1712528339
+      misc-3_5: 1163410058
       mushroom: 1199412830
       pipe_body: 95445106
       pipe_head: 1383931381
       question: 1062246701
+      question_blink: 545259248
       small_hill: -1762736478
       top_brick: -361989001
+      used_box: -2030686666
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
