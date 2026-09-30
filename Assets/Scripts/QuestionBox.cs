@@ -7,6 +7,7 @@ public class QuestionBox : MonoBehaviour
     public float bounceDuration = 0.15f;
 
     public GameObject coinPrefab;
+    public AudioClip coinSound; // Slot for your coin sound effect in the Inspector
 
     private Vector3 startPosition;
     private bool isBouncing = false;
@@ -92,6 +93,12 @@ public class QuestionBox : MonoBehaviour
 
     private void SpawnCoin()
     {
+        // Spawns the sound exactly where the camera is so it isn't muted by 3D distance
+        if (coinSound != null)
+        {
+            AudioSource.PlayClipAtPoint(coinSound, Camera.main.transform.position);
+        }
+
         GameObject coin = Instantiate(
             coinPrefab,
             transform.position + Vector3.up * 0.5f,
@@ -164,6 +171,4 @@ public class QuestionBox : MonoBehaviour
         animator.enabled = true;
         animator.Play("QuestionBoxBlink", 0, 0f);
     }
-
-
 }

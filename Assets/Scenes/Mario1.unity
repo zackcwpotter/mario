@@ -1989,7 +1989,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: question_bounce (3)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1041634329913025866, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2700,7 +2701,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: question_bounce (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1041634329913025866, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3542,11 +3544,25 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 985506316310829254, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 985506316310829254, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915495913481999881, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
+      propertyPath: coinSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d885ffc842af744d89f7d595ffcc176a, type: 3}
     - target: {fileID: 5443495134453905461, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
       propertyPath: m_Name
       value: question_bounce (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 985506316310829254, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
+    - {fileID: 1041634329913025866, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3736,7 +3752,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: question_bounce
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1041634329913025866, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3755,7 +3772,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9173624686925335229, guid: bd2ae2f744feb3d4b9ec2ea9ba6f4f71, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.97
+      value: 9.99
       objectReference: {fileID: 0}
     - target: {fileID: 9173624686925335229, guid: bd2ae2f744feb3d4b9ec2ea9ba6f4f71, type: 3}
       propertyPath: m_LocalPosition.y
