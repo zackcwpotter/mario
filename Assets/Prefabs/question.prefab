@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4941505330912370616}
   - component: {fileID: 8797222182695812237}
   - component: {fileID: 8325816299616058073}
+  - component: {fileID: -8427764734437423028}
   m_Layer: 0
   m_Name: question
   m_TagString: Untagged
@@ -128,7 +129,7 @@ BoxCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0.004529953, y: 0.004529834}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 0.0625, y: 0.0625, z: 0.0625, w: 0.0625}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1.125, y: 1.125}
     newSize: {x: 1.125, y: 1.125}
@@ -138,3 +139,20 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.0434628, y: 1.025343}
   m_EdgeRadius: 0
+--- !u!114 &-8427764734437423028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289849236102379913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660681ceb8849f34d90a19d2d9452d25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::QuestionBox
+  bounceHeight: 0.5
+  bounceDuration: 0.05
+  coinPrefab: {fileID: 1792390855028460603, guid: 8e56920a37b25ba47bd26be5e1ccabe4, type: 3}
+  coinSound: {fileID: 8300000, guid: d885ffc842af744d89f7d595ffcc176a, type: 3}
+  disabledSprite: {fileID: -2030686666, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}

@@ -5,6 +5,7 @@ public class Brick : MonoBehaviour
 {
     public bool hasCoin = false;
     public GameObject coinPrefab;
+    public AudioClip coinSound; // Slot for your coin sound effect in the Inspector
 
     public float bounceHeight = 0.3f;
     public float bounceDuration = 0.15f;
@@ -82,6 +83,12 @@ public class Brick : MonoBehaviour
 
     private void SpawnCoin()
     {
+        // Play the sound at the camera's position so it isn't muted
+        if (coinSound != null)
+        {
+            AudioSource.PlayClipAtPoint(coinSound, Camera.main.transform.position);
+        }
+
         GameObject coin = Instantiate(
             coinPrefab,
             transform.position + Vector3.up * 0.5f,
