@@ -127,4 +127,12 @@ public class Brick : MonoBehaviour
 
         Destroy(coin);
     }
+
+    public void ResetBrick()
+    {
+        isUsed = false;
+        isBouncing = false;
+
+        transform.localPosition = startPosition;
+    }
 }

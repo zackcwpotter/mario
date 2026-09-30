@@ -242,6 +242,24 @@ public class PlayerMovement : MonoBehaviour
         // reset animation and state
         marioAnimator.SetTrigger("gameRestart");
         alive = true;
+
+        QuestionBox[] questionBoxes = FindObjectsByType<QuestionBox>(
+            FindObjectsSortMode.None
+        );
+
+        foreach (QuestionBox box in questionBoxes)
+        {
+            box.ResetBox();
+        }
+
+        Brick[] bricks = FindObjectsByType<Brick>(
+            FindObjectsSortMode.None
+        );
+
+        foreach (Brick brick in bricks)
+        {
+            brick.ResetBrick();
+        }
     }
 
     void PlayJumpSound()

@@ -151,5 +151,19 @@ public class QuestionBox : MonoBehaviour
         spriteRenderer.sprite = disabledSprite;
     }
 
+    public void ResetBox()
+    {
+        // Box can be used again
+        isUsed = false;
+        isBouncing = false;
+
+        // Reset position
+        transform.localPosition = startPosition;
+
+        // Turn blinking animation back on
+        animator.enabled = true;
+        animator.Play("QuestionBoxBlink", 0, 0f);
+    }
+
 
 }

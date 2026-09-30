@@ -2392,8 +2392,8 @@ Transform:
   - {fileID: 981528776}
   - {fileID: 107367445}
   - {fileID: 919326666}
-  - {fileID: 629862448}
   - {fileID: 607865984990298011}
+  - {fileID: 629862448}
   - {fileID: 1632459210}
   - {fileID: 1519781951}
   m_Father: {fileID: 0}
@@ -3358,7 +3358,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5561935661274499925, guid: bd2ae2f744feb3d4b9ec2ea9ba6f4f71, type: 3}
       propertyPath: m_Name
-      value: 'top_brick '
+      value: 'top_brick (1) '
+      objectReference: {fileID: 0}
+    - target: {fileID: 7582244554321779302, guid: bd2ae2f744feb3d4b9ec2ea9ba6f4f71, type: 3}
+      propertyPath: hasCoin
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9173624686925335229, guid: bd2ae2f744feb3d4b9ec2ea9ba6f4f71, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3747,7 +3751,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5561935661274499925, guid: bd2ae2f744feb3d4b9ec2ea9ba6f4f71, type: 3}
       propertyPath: m_Name
-      value: top_brick (1)
+      value: top_brick
       objectReference: {fileID: 0}
     - target: {fileID: 9173624686925335229, guid: bd2ae2f744feb3d4b9ec2ea9ba6f4f71, type: 3}
       propertyPath: m_LocalPosition.x
