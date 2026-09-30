@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Brick
   hasCoin: 1
   coinPrefab: {fileID: 1792390855028460603, guid: 8e56920a37b25ba47bd26be5e1ccabe4, type: 3}
-  coinSound: {fileID: 0}
+  coinSound: {fileID: 8300000, guid: d885ffc842af744d89f7d595ffcc176a, type: 3}
   bounceHeight: 0.5
   bounceDuration: 0.05
 --- !u!50 &9162969196694868173
