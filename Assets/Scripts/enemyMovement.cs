@@ -56,4 +56,12 @@ public class EnemyMovement : MonoBehaviour
     {
         Debug.Log(other.gameObject.name);
     }
+
+    public void GameRestart()
+    {
+        transform.localPosition = startPosition;
+        originalX = transform.position.x;
+        moveRight = -1;
+        ComputeVelocity();
+    }
 }
