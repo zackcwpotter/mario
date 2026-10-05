@@ -8,10 +8,8 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 25;
     public float maxSpeed = 30;
     public float upSpeed = 10;
+    private bool moving = false;
 
-    public TextMeshProUGUI scoreText;
-    public GameObject enemies;
-    public JumpOverGoomba jumpOverGoomba;
     public GameObject gameOverPanel;
     int collisionLayerMask = (1 << 6) | (1 << 7) | (1 << 8);
 
@@ -27,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer marioSprite;
     private bool faceRightState = true;
     private Vector3 startPosition;
+    private bool jumpedState = false;
 
     // Variables to remember where the UI originally was
     private Vector2 scoreOrigPos, scoreOrigAnchorMin, scoreOrigAnchorMax;
@@ -81,61 +80,48 @@ public class PlayerMovement : MonoBehaviour
     {
         if (alive)
         {
-            if (Input.GetKeyDown("a") && faceRightState)
-            {
-                faceRightState = false;
-                marioSprite.flipX = true;
-                if (marioBody.linearVelocity.x > 0.1f)
-                    marioAnimator.SetTrigger("onSkid");
-            }
-
-            if (Input.GetKeyDown("d") && !faceRightState)
-            {
-                faceRightState = true;
-                marioSprite.flipX = false;
-                if (marioBody.linearVelocity.x < -0.1f)
-                    marioAnimator.SetTrigger("onSkid");
-            }
-
             marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.linearVelocity.x));
+        }
+    }
+
+    void FlipMarioSprite(int value)
+    {
+        if (!alive)
+            return;
+
+        if (value == -1 && faceRightState)
+        {
+            faceRightState = false;
+            marioSprite.flipX = true;
+
+            if (marioBody.linearVelocity.x > 0.05f)
+                marioAnimator.SetTrigger("onSkid");
+        }
+        else if (value == 1 && !faceRightState)
+        {
+            faceRightState = true;
+            marioSprite.flipX = false;
+
+            if (marioBody.linearVelocity.x < -0.05f)
+                marioAnimator.SetTrigger("onSkid");
         }
     }
 
     void FixedUpdate()
     {
-        if (alive)
+        if (alive && moving)
         {
-            float moveHorizontal = Input.GetAxisRaw("Horizontal");
-
-            if (Mathf.Abs(moveHorizontal) > 0)
-            {
-                Vector2 movement = new Vector2(moveHorizontal, 0);
-
-                if (Mathf.Abs(marioBody.linearVelocity.x) < maxSpeed)
-                {
-                    marioBody.AddForce(movement * speed);
-                }
-            }
-
-            // Tutorial jumping logic
-            if (Input.GetKeyDown("space") && onGroundState)
-            {
-                marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
-                onGroundState = false;
-                // update animator state
-                marioAnimator.SetBool("onGround", onGroundState);
-            }
+            Move(faceRightState == true ? 1 : -1);
         }
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (((collisionLayerMask & (1 << col.gameObject.layer)) > 0) && !onGroundState)
+        if ((collisionLayerMask & (1 << col.gameObject.layer)) > 0)
         {
             onGroundState = true;
 
-            // Update animator state
-            marioAnimator.SetBool("onGround", onGroundState);
+            marioAnimator.SetBool("onGround", true);
         }
     }
 
@@ -204,18 +190,6 @@ public class PlayerMovement : MonoBehaviour
         
         faceRightState = true;
         marioSprite.flipX = false;
-        scoreText.text = "Score: 0";
-
-        foreach (Transform eachChild in enemies.transform)
-        {
-            EnemyMovement enemyScript = eachChild.GetComponent<EnemyMovement>();
-            if (enemyScript != null)
-            {
-                eachChild.localPosition = enemyScript.startPosition;
-            }
-        }
-
-        jumpOverGoomba.score = 0;
 
         if (gameOverPanel != null)
         {
@@ -268,5 +242,74 @@ public class PlayerMovement : MonoBehaviour
         {
             marioAudio.PlayOneShot(marioAudio.clip);
         }
+    }
+
+    public void Jump()
+    {
+        if (alive && onGroundState)
+        {
+            // jump
+            marioBody.AddForce(Vector2.up * upSpeed, ForceMode2D.Impulse);
+            onGroundState = false;
+            jumpedState = true;
+
+            // update animator state
+            marioAnimator.SetBool("onGround", onGroundState);
+        }
+    }
+
+    public void JumpHold()
+    {
+        if (alive && jumpedState)
+        {
+            // jump higher
+            marioBody.AddForce(Vector2.up * upSpeed * 30, ForceMode2D.Force);
+            jumpedState = false;
+        }
+    }
+
+    void Move(int value)
+    {
+        Vector2 movement = new Vector2(value, 0);
+
+        // check if it doesn't go beyond maxSpeed
+        if (marioBody.linearVelocity.magnitude < maxSpeed)
+            marioBody.AddForce(movement * speed);
+    }
+
+    public void MoveCheck(int value)
+    {
+        Debug.Log($"MoveCheck called with value: {value}");
+
+        if (value == 0)
+        {
+            moving = false;
+        }
+        else
+        {
+            FlipMarioSprite(value);
+            moving = true;
+            Move(value);
+        }
+    }
+
+    public void GameRestart()
+    {
+        // re-enable collider
+        GetComponent<Collider2D>().enabled = true;
+
+        // reset position
+        marioBody.transform.position = startPosition;
+
+        // reset sprite direction
+        faceRightState = true;
+        marioSprite.flipX = false;
+
+        // reset animation
+        marioAnimator.SetTrigger("gameRestart");
+        alive = true;
+
+        // reset camera position
+        gameCamera.position = new Vector3(0.47f, 1f, -36.1f);
     }
 }

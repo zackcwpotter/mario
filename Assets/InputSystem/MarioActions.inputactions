@@ -17,7 +17,7 @@
                     "priority": 0
                 },
                 {
-                    "name": "Button",
+                    "name": "jump",
                     "type": "Button",
                     "id": "90ed7e19-a411-41ae-9077-c0d412247088",
                     "expectedControlType": "",
@@ -32,8 +32,28 @@
                     "id": "eca7e735-cb67-41f7-9b9f-bf1348d1997c",
                     "expectedControlType": "",
                     "processors": "",
+                    "interactions": "Hold(duration=0.3,pressPoint=0.5)",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "click",
+                    "type": "Button",
+                    "id": "00ce98f0-9501-4116-ad80-94df3aee684f",
+                    "expectedControlType": "",
+                    "processors": "",
                     "interactions": "",
                     "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
+                    "name": "point",
+                    "type": "Value",
+                    "id": "fe22a604-e087-4afb-bf40-54f73c6409ad",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true,
                     "priority": 0
                 }
             ],
@@ -72,13 +92,46 @@
                     "isPartOfComposite": true
                 },
                 {
+                    "name": "1D Axis (Arrows)",
+                    "id": "53be598e-e8f8-4622-af09-ed517f93172b",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "e8575f1a-ea64-4417-94ee-4f01a783bacd",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "8b6ce449-37df-4f99-ac00-efa7d3b07b14",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "2c8328d7-b941-4021-b2da-0ac52e6202ea",
                     "path": "<Keyboard>/space",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": ";keyboard",
-                    "action": "Button",
+                    "groups": "MarioActions",
+                    "action": "jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -86,23 +139,83 @@
                     "name": "",
                     "id": "2640bac8-7d4c-4214-a8c0-deb52b47b236",
                     "path": "<Keyboard>/space",
-                    "interactions": "Hold(duration=0.3)",
+                    "interactions": "",
                     "processors": "",
-                    "groups": ";keyboard",
+                    "groups": "MarioActions",
                     "action": "jumphold",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8e1d8e8c-0850-48c4-aedb-920ad5d66df5",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7fe0fd0-0fe6-4315-af49-a7d40278e663",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "82db172f-50c4-4d80-9335-204f087c75ff",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "point",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "7f079b3c-b33a-489a-a378-1340e567ce34",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "point",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "97dafc1a-e5fd-4b2b-bd14-fe140f50ed91",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "point",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
     ],
     "controlSchemes": [
         {
-            "name": "keyboard",
-            "bindingGroup": "keyboard",
+            "name": "MarioActions",
+            "bindingGroup": "MarioActions",
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }
