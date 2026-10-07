@@ -1,11 +1,12 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Brick : MonoBehaviour
 {
     public bool hasCoin = false;
-    public GameObject coinPrefab;
-    public AudioClip coinSound; // Slot for your coin sound effect in the Inspector
+    public GameObject coin; 
+    public AudioClip coinSound; 
 
     public float bounceHeight = 0.3f;
     public float bounceDuration = 0.15f;
@@ -13,10 +14,23 @@ public class Brick : MonoBehaviour
     private Vector3 startPosition;
     private bool isUsed = false;
     private bool isBouncing = false;
+    private AudioSource audioSource; // Added AudioSource reference
 
     void Start()
     {
         startPosition = transform.localPosition;
+        audioSource = GetComponent<AudioSource>(); // Get the component
+        
+        if (coin != null) 
+        {
+            coin.SetActive(false);
+        }
+
+        GameManager gm = Object.FindFirstObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.gameRestart.AddListener(ResetBrick);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -26,18 +40,16 @@ public class Brick : MonoBehaviour
 
         foreach (ContactPoint2D contact in collision.contacts)
         {
-            // Mario hits brick from below
             if (contact.normal.y > 0.5f && !isUsed && !isBouncing)
             {
                 isUsed = true;
-
                 StartCoroutine(Bounce());
-
-                if (hasCoin)
+                
+                if (hasCoin) 
                 {
                     SpawnCoin();
                 }
-
+                
                 break;
             }
         }
@@ -45,35 +57,23 @@ public class Brick : MonoBehaviour
 
     private IEnumerator Bounce()
     {
+        // ... (Keep your existing Bounce Coroutine exact logic here)
         isBouncing = true;
-
         Vector3 topPosition = startPosition + Vector3.up * bounceHeight;
 
         float time = 0f;
-
         while (time < bounceDuration)
         {
             time += Time.deltaTime;
-            transform.localPosition = Vector3.Lerp(
-                startPosition,
-                topPosition,
-                time / bounceDuration
-            );
-
+            transform.localPosition = Vector3.Lerp(startPosition, topPosition, time / bounceDuration);
             yield return null;
         }
 
         time = 0f;
-
         while (time < bounceDuration)
         {
             time += Time.deltaTime;
-            transform.localPosition = Vector3.Lerp(
-                topPosition,
-                startPosition,
-                time / bounceDuration
-            );
-
+            transform.localPosition = Vector3.Lerp(topPosition, startPosition, time / bounceDuration);
             yield return null;
         }
 
@@ -83,25 +83,24 @@ public class Brick : MonoBehaviour
 
     private void SpawnCoin()
     {
-        // Play the sound at the camera's position so it isn't muted
+        // Replaced PlayClipAtPoint with the routable AudioSource
         if (coinSound != null)
         {
-            AudioSource.PlayClipAtPoint(coinSound, Camera.main.transform.position);
+            audioSource.PlayOneShot(coinSound);
         }
 
-        GameObject coin = Instantiate(
-            coinPrefab,
-            transform.position + Vector3.up * 0.5f,
-            Quaternion.identity
-        );
-
-        StartCoroutine(MoveCoin(coin));
+        if (coin != null)
+        {
+            coin.SetActive(true);
+            StartCoroutine(MoveCoin(coin));
+        }
     }
 
-    private IEnumerator MoveCoin(GameObject coin)
+    private IEnumerator MoveCoin(GameObject coinObj)
     {
-        Vector3 startCoinPosition = coin.transform.position;
-        Vector3 topPosition = startCoinPosition + Vector3.up * 1.5f;
+        // ... (Keep your existing MoveCoin Coroutine exact logic here)
+        Vector3 startCoinPos = coinObj.transform.position;
+        Vector3 topPosition = startCoinPos + Vector3.up * 1.5f;
 
         float duration = 0.3f;
         float time = 0f;
@@ -109,37 +108,30 @@ public class Brick : MonoBehaviour
         while (time < duration)
         {
             time += Time.deltaTime;
-            coin.transform.position = Vector3.Lerp(
-                startCoinPosition,
-                topPosition,
-                time / duration
-            );
-
+            coinObj.transform.position = Vector3.Lerp(startCoinPos, topPosition, time / duration);
             yield return null;
         }
 
         time = 0f;
-
         while (time < duration)
         {
             time += Time.deltaTime;
-            coin.transform.position = Vector3.Lerp(
-                topPosition,
-                startCoinPosition,
-                time / duration
-            );
-
+            coinObj.transform.position = Vector3.Lerp(topPosition, startCoinPos, time / duration);
             yield return null;
         }
 
-        Destroy(coin);
+        coinObj.SetActive(false);
     }
 
     public void ResetBrick()
     {
         isUsed = false;
         isBouncing = false;
-
         transform.localPosition = startPosition;
+        
+        if (coin != null) 
+        {
+            coin.SetActive(false);
+        }
     }
 }

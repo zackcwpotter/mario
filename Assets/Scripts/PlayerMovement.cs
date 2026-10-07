@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,12 +9,16 @@ public class PlayerMovement : MonoBehaviour
     public float upSpeed = 10;
     private bool moving = false;
 
-    public GameObject gameOverPanel;
-    int collisionLayerMask = (1 << 6) | (1 << 7) | (1 << 8);
+    // GameManager
+    public GameManager gameManager;
 
     // UI
     public RectTransform scoreTextRect;
     public RectTransform restartButtonRect;
+    public GameObject gameOverPanel;
+    
+
+    int collisionLayerMask = (1 << 6) | (1 << 7) | (1 << 8);
 
     // Animation
     public Animator marioAnimator;
@@ -70,10 +73,8 @@ public class PlayerMovement : MonoBehaviour
             scoreTextRect.anchorMax = new Vector2(0, 1);
             scoreTextRect.pivot = new Vector2(0, 1);
 
-            // Distance from top-left corner
             scoreTextRect.anchoredPosition = new Vector2(40, -40);
 
-            // Save normal gameplay layout
             scoreOrigPos = scoreTextRect.anchoredPosition;
             scoreOrigAnchorMin = scoreTextRect.anchorMin;
             scoreOrigAnchorMax = scoreTextRect.anchorMax;
@@ -88,7 +89,6 @@ public class PlayerMovement : MonoBehaviour
             buttonOrigAnchorMax = restartButtonRect.anchorMax;
         }
 
-        // Update animator state
         marioAnimator.SetBool("onGround", onGroundState);
     }
 
@@ -171,7 +171,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        // Mario collided with Goomba from the side
+        // Mario hit Goomba from the side
         Debug.Log("Collided with goomba!");
 
         GetComponent<Collider2D>().enabled = false;
@@ -194,61 +194,45 @@ public class PlayerMovement : MonoBehaviour
 
     void GameOverScene()
     {
-        Time.timeScale = 0.0f;
 
+        if (gameManager != null)
+        {
+            gameManager.GameOver();
+        }
+
+        // Show red Game Over screen
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
         }
 
-        // Move score to Game Over screen
         if (scoreTextRect != null)
         {
             scoreTextRect.anchorMin = new Vector2(0.5f, 0.5f);
             scoreTextRect.anchorMax = new Vector2(0.5f, 0.5f);
             scoreTextRect.pivot = new Vector2(0.5f, 0.5f);
-
             scoreTextRect.anchoredPosition = new Vector2(0, -50);
         }
 
-        // Move restart button to Game Over screen
         if (restartButtonRect != null)
         {
             restartButtonRect.anchorMin = new Vector2(0.5f, 0.5f);
             restartButtonRect.anchorMax = new Vector2(0.5f, 0.5f);
-
             restartButtonRect.anchoredPosition = new Vector2(0, -180);
         }
     }
 
 
-    // Old restart callback - can still stay here
-    public void RestartButtonCallback(int input)
-    {
-        ResetGame();
-        Time.timeScale = 1.0f;
-    }
-
-
     public void ResetGame()
     {
-        // Re-enable Mario collider
         GetComponent<Collider2D>().enabled = true;
 
-        // Reset Mario position
         marioBody.transform.position = startPosition;
 
-        // Reset direction
         faceRightState = true;
         marioSprite.flipX = false;
 
-        // Hide Game Over panel
-        if (gameOverPanel != null)
-        {
-            gameOverPanel.SetActive(false);
-        }
-
-        // Put score back in top-left corner
+        // Restore score UI
         if (scoreTextRect != null)
         {
             scoreTextRect.anchorMin = scoreOrigAnchorMin;
@@ -257,7 +241,7 @@ public class PlayerMovement : MonoBehaviour
             scoreTextRect.anchoredPosition = scoreOrigPos;
         }
 
-        // Restore restart button position
+        // Restore restart button UI
         if (restartButtonRect != null)
         {
             restartButtonRect.anchorMin = buttonOrigAnchorMin;
@@ -265,12 +249,23 @@ public class PlayerMovement : MonoBehaviour
             restartButtonRect.anchoredPosition = buttonOrigPos;
         }
 
-        // Reset camera
         gameCamera.position =
             new Vector3(0.47f, 1f, -36.1f);
 
-        // Reset animation/state
-        marioAnimator.SetTrigger("gameRestart");
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(false);
+        }
+        // Reset Mario animation immediately
+        marioAnimator.Rebind();
+        marioAnimator.Update(0f);
+
+        onGroundState = true;
+        jumpedState = false;
+        moving = false;
+
+        marioAnimator.SetBool("onGround", true);
+
         alive = true;
 
         // Reset question boxes
@@ -362,9 +357,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             FlipMarioSprite(value);
-
             moving = true;
-
             Move(value);
         }
     }
@@ -372,22 +365,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void GameRestart()
     {
-        // Re-enable collider
-        GetComponent<Collider2D>().enabled = true;
-
-        // Reset position
-        marioBody.transform.position = startPosition;
-
-        // Reset sprite direction
-        faceRightState = true;
-        marioSprite.flipX = false;
-
-        // Reset animation
-        marioAnimator.SetTrigger("gameRestart");
-        alive = true;
-
-        // Reset camera
-        gameCamera.position =
-            new Vector3(0.47f, 1f, -36.1f);
+        ResetGame();
     }
 }
