@@ -738,6 +738,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: flat_goomba
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 343
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b054d1ee3a08dd4a83f3cb3300fe785
+      internalID: 153031826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -763,6 +785,7 @@ TextureImporter:
       coin-spin3: -1961781012
       coin-spin4: -1637606393
       coin_spin1: -1736433935
+      flat_goomba: 153031826
       goomba: 2021442919
       misc-3_0: -293349007
       misc-3_1: 436808072

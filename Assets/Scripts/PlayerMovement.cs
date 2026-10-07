@@ -98,18 +98,31 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemy") && alive)
+        if (!other.CompareTag("Enemy") || !alive)
+            return;
+
+        bool marioIsAbove =
+            transform.position.y > other.transform.position.y + 0.3f;
+
+        bool marioIsFalling =
+            marioBody.linearVelocity.y < 0;
+
+        // Mario lands on top of Goomba
+        if (marioIsAbove && marioIsFalling)
         {
-            Debug.Log("Collided with goomba!");
-
-            // Disable collider so he falls through the ground
-            GetComponent<Collider2D>().enabled = false;
-
-            // play death animation
-            marioAnimator.Play("mario-die");
-            marioDeathAudio.Play();
-            alive = false;
+            Debug.Log("Mario stomped Goomba!");
+            return;
         }
+
+        // Mario hits Goomba from the side
+        Debug.Log("Collided with goomba!");
+
+        GetComponent<Collider2D>().enabled = false;
+
+        marioAnimator.Play("mario-die");
+        marioDeathAudio.Play();
+
+        alive = false;
     }
 
     void PlayDeathImpulse()
