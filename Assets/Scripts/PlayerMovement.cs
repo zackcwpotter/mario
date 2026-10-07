@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Singleton<PlayerMovement>
 {
     public float speed = 25;
     public float maxSpeed = 30;
@@ -46,6 +47,8 @@ public class PlayerMovement : MonoBehaviour
 
         // update animator state
         marioAnimator.SetBool("onGround", onGroundState);
+
+        SceneManager.activeSceneChanged += SetStartingPosition;
     }
 
     void Update()
@@ -214,5 +217,18 @@ public class PlayerMovement : MonoBehaviour
 
         // reset camera position
         gameCamera.position = new Vector3(0.47f, 1f, -36.1f);
+    }
+
+    public void SetStartingPosition(Scene current, Scene next)
+    {
+        if (next.name == "World 1-2")
+        {
+            transform.position = new Vector3(0f, 0f, 0f);
+        }
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.activeSceneChanged -= SetStartingPosition;
     }
 }

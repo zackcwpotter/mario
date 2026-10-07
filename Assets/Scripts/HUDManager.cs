@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class HUDManager : MonoBehaviour
+public class HUDManager : Singleton<HUDManager>
 {
     [Header("Index 0 = Playing, Index 1 = Game Over")]
     public Vector3[] scoreTextPosition = {

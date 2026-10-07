@@ -747,7 +747,7 @@ TextureImporter:
         width: 16
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -756,6 +756,28 @@ TextureImporter:
       bones: []
       spriteID: 9b054d1ee3a08dd4a83f3cb3300fe785
       internalID: 153031826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: castle
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 954
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b25f85912f339c4f9f6302666a69b4b
+      internalID: 249663380
       vertices: []
       indices: 
       edges: []
@@ -780,6 +802,7 @@ TextureImporter:
       3cloud: 1669181242
       big_hill: -1214603271
       brownFloor: 1094453920
+      castle: 249663380
       coin: 263555830
       coin-spin2: -1721966518
       coin-spin3: -1961781012

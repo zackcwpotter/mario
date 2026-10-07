@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Audio; // Required for AudioMixer snapshots
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public UnityEvent gameStart;
     public UnityEvent gameRestart;
