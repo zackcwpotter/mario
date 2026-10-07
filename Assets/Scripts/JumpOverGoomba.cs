@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class JumpOverGoomba : MonoBehaviour
 {
-    GameManager gameManager;
+    // Expose GameManager in the inspector instead of using FindGameObjectWithTag
+    public GameManager gameManager;
 
     public Transform enemyLocation;
     private bool onGroundState;
@@ -15,17 +15,12 @@ public class JumpOverGoomba : MonoBehaviour
     public float maxDistance;
     public LayerMask layerMask;
 
-    // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-
-
     }
 
     void FixedUpdate()
@@ -53,25 +48,21 @@ public class JumpOverGoomba : MonoBehaviour
         if (col.gameObject.CompareTag("Ground")) onGroundState = true;
     }
 
-
     private bool onGroundCheck()
     {
         if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, maxDistance, layerMask))
         {
-            Debug.Log("on ground");
             return true;
         }
         else
         {
-            Debug.Log("not on ground");
             return false;
         }
     }
-    // helper
+    
     void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawCube(transform.position - transform.up * maxDistance, boxSize);
     }
-
 }

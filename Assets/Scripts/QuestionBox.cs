@@ -6,8 +6,8 @@ public class QuestionBox : MonoBehaviour
     public float bounceHeight = 0.3f;
     public float bounceDuration = 0.15f;
 
-    public GameObject coinPrefab;
-    public AudioClip coinSound; // Slot for your coin sound effect in the Inspector
+    public GameObject coin; 
+    public AudioClip coinSound; 
 
     private Vector3 startPosition;
     private bool isBouncing = false;
@@ -21,29 +21,32 @@ public class QuestionBox : MonoBehaviour
     void Start()
     {
         startPosition = transform.localPosition;
-
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+
+        if (coin != null) coin.SetActive(false);
+
+        // Automatically subscribe to the game restart event
+        GameManager gm = Object.FindFirstObjectByType<GameManager>();
+        if (gm != null)
+        {
+            gm.gameRestart.AddListener(ResetBox);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Only react to Mario
         if (!collision.gameObject.CompareTag("Player"))
             return;
 
         foreach (ContactPoint2D contact in collision.contacts)
         {
-            // Mario hit the box from below
             if (contact.normal.y > 0.5f && !isBouncing && !isUsed)
             {
                 isUsed = true;
-
                 StartCoroutine(Bounce());
                 SpawnCoin();
-
                 DisableQuestionBox();
-
                 break;
             }
         }
@@ -52,38 +55,21 @@ public class QuestionBox : MonoBehaviour
     private IEnumerator Bounce() 
     {
         isBouncing = true;
-
         Vector3 topPosition = startPosition + Vector3.up * bounceHeight;
 
-        // Move up
         float time = 0f;
-
         while (time < bounceDuration)
         {
             time += Time.deltaTime;
-
-            transform.localPosition = Vector3.Lerp(
-                startPosition,
-                topPosition,
-                time / bounceDuration
-            );
-
+            transform.localPosition = Vector3.Lerp(startPosition, topPosition, time / bounceDuration);
             yield return null;
         }
 
-        // Move back down
         time = 0f;
-
         while (time < bounceDuration)
         {
             time += Time.deltaTime;
-
-            transform.localPosition = Vector3.Lerp(
-                topPosition,
-                startPosition,
-                time / bounceDuration
-            );
-
+            transform.localPosition = Vector3.Lerp(topPosition, startPosition, time / bounceDuration);
             yield return null;
         }
 
@@ -93,82 +79,59 @@ public class QuestionBox : MonoBehaviour
 
     private void SpawnCoin()
     {
-        // Spawns the sound exactly where the camera is so it isn't muted by 3D distance
         if (coinSound != null)
         {
             AudioSource.PlayClipAtPoint(coinSound, Camera.main.transform.position);
         }
 
-        GameObject coin = Instantiate(
-            coinPrefab,
-            transform.position + Vector3.up * 0.5f,
-            Quaternion.identity
-        );
-
-        StartCoroutine(MoveCoin(coin));
+        if (coin != null)
+        {
+            coin.SetActive(true);
+            StartCoroutine(MoveCoin(coin));
+        }
     }
 
-    private IEnumerator MoveCoin(GameObject coin)
+    private IEnumerator MoveCoin(GameObject coinObj)
     {
-        Vector3 startPosition = coin.transform.position;
-        Vector3 topPosition = startPosition + Vector3.up * 1.5f;
+        Vector3 startCoinPos = coinObj.transform.position;
+        Vector3 topPosition = startCoinPos + Vector3.up * 1.5f;
 
         float duration = 0.3f;
         float time = 0f;
 
-        // Move coin up
         while (time < duration)
         {
             time += Time.deltaTime;
-
-            coin.transform.position = Vector3.Lerp(
-                startPosition,
-                topPosition,
-                time / duration
-            );
-
+            coinObj.transform.position = Vector3.Lerp(startCoinPos, topPosition, time / duration);
             yield return null;
         }
 
-        // Move coin back down
         time = 0f;
-
         while (time < duration)
         {
             time += Time.deltaTime;
-
-            coin.transform.position = Vector3.Lerp(
-                topPosition,
-                startPosition,
-                time / duration
-            );
-
+            coinObj.transform.position = Vector3.Lerp(topPosition, startCoinPos, time / duration);
             yield return null;
         }
 
-        Destroy(coin);
+        coinObj.SetActive(false);
     }
 
     private void DisableQuestionBox()
     {
-        // Stop blinking animation
         animator.enabled = false;
-
-        // Show disabled box
         spriteRenderer.sprite = disabledSprite;
     }
 
     public void ResetBox()
     {
-        // Box can be used again
         isUsed = false;
         isBouncing = false;
-
-        // Reset position
         transform.localPosition = startPosition;
 
-        // Turn blinking animation back on
         animator.enabled = true;
         animator.Play("QuestionBoxBlink", 0, 0f);
+
+        if (coin != null) coin.SetActive(false);
     }
 }
