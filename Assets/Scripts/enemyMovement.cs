@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-        public Vector3 startPosition; 
+    public Vector3 startPosition;
+
+    public delegate void GoombaStompHandler();
+    public event GoombaStompHandler OnGoombaStomp;
 
     private float originalX;
     private float maxOffset = 5.0f;
@@ -14,9 +17,22 @@ public class EnemyMovement : MonoBehaviour
 
     private Rigidbody2D enemyBody;
 
+    public Sprite stompedSprite;
+
+    private SpriteRenderer spriteRenderer;
+    private bool stomped = false;
+
+    private Sprite originalSprite;
+
+    public AudioSource goombaAudio;
+    public AudioClip stompSound;
+
     void Start()
     {
+        
         enemyBody = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalSprite = spriteRenderer.sprite;
         
         //Save the starting position when the game starts
         startPosition = transform.localPosition; 
@@ -54,14 +70,67 @@ public class EnemyMovement : MonoBehaviour
     
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.gameObject.name);
+        if (!other.CompareTag("Player") || stomped)
+            return;
+
+        Rigidbody2D marioBody = other.GetComponent<Rigidbody2D>();
+
+        bool marioIsAbove =
+            other.transform.position.y > transform.position.y + 0.3f;
+
+        bool marioIsFalling =
+            marioBody != null && marioBody.linearVelocity.y < 0;
+
+        if (marioIsAbove && marioIsFalling)
+        {
+            Debug.Log("GOOMBA STOMPED!");
+
+            Stomp();
+            OnGoombaStomp?.Invoke();
+        }
     }
 
     public void GameRestart()
     {
+        stomped = false;
+
+        // Restore normal Goomba
+        spriteRenderer.enabled = true;
+        spriteRenderer.sprite = originalSprite;
+        GetComponent<Collider2D>().enabled = true;
+
+        // Reset position and movement
         transform.localPosition = startPosition;
         originalX = transform.position.x;
         moveRight = -1;
         ComputeVelocity();
+    }
+
+    private void Stomp()
+    {
+        if (stomped)
+            return;
+
+        stomped = true;
+
+        // Stop Goomba
+        velocity = Vector2.zero;
+
+        // Play stomp sound
+        goombaAudio.PlayOneShot(stompSound);
+
+        // Make Goomba flat
+        spriteRenderer.sprite = stompedSprite;
+
+        // Hide Goomba after a short delay
+        StartCoroutine(HideAfterStomp());
+    }
+
+    private IEnumerator HideAfterStomp()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        spriteRenderer.enabled = false;
+        GetComponent<Collider2D>().enabled = false;
     }
 }

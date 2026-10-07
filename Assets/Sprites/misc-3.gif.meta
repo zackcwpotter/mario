@@ -738,6 +738,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: misc-3_6
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 343
+        width: 16
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 378f2a1339b4a5a49b118db99e170389
+      internalID: 107458944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -770,6 +792,7 @@ TextureImporter:
       misc-3_3: 1949458612
       misc-3_4: -1712528339
       misc-3_5: 1163410058
+      misc-3_6: 107458944
       mushroom: 1199412830
       pipe_body: 95445106
       pipe_head: 1383931381
