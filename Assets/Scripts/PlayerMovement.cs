@@ -1,17 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class PlayerMovement : Singleton<PlayerMovement>
+
+public class PlayerMovement : MonoBehaviour
 {
     public float speed = 25;
     public float maxSpeed = 30;
     public float upSpeed = 10;
     private bool moving = false;
-
-    // Added reference to GameManager as per the refactoring instructions
-    public GameManager gameManager;
 
     int collisionLayerMask = (1 << 6) | (1 << 7) | (1 << 8);
 
@@ -48,7 +45,8 @@ public class PlayerMovement : Singleton<PlayerMovement>
         // update animator state
         marioAnimator.SetBool("onGround", onGroundState);
 
-        SceneManager.activeSceneChanged += SetStartingPosition;
+        GameManager.instance.gameRestart.AddListener(GameRestart);
+
     }
 
     void Update()
@@ -135,11 +133,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
 
     void GameOverScene()
     {
-        // Delegate the GameOver handling entirely to the GameManager
-        if (gameManager != null)
-        {
-            gameManager.GameOver();
-        }
+        GameManager.instance.GameOver();
     }
 
     void PlayJumpSound()
@@ -217,18 +211,5 @@ public class PlayerMovement : Singleton<PlayerMovement>
 
         // reset camera position
         gameCamera.position = new Vector3(0.47f, 1f, -36.1f);
-    }
-
-    public void SetStartingPosition(Scene current, Scene next)
-    {
-        if (next.name == "World 1-2")
-        {
-            transform.position = new Vector3(0f, 0f, 0f);
-        }
-    }
-
-    void OnDestroy()
-    {
-        SceneManager.activeSceneChanged -= SetStartingPosition;
     }
 }
