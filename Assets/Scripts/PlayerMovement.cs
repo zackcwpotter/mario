@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     // for audio
     public AudioSource marioAudio;
 
-    public AudioClip marioDeath;
+    public AudioSource marioDeathAudio;
     public float deathImpulse = 15;
 
     // state
@@ -107,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
 
             // play death animation
             marioAnimator.Play("mario-die");
-            marioAudio.PlayOneShot(marioDeath);
+            marioDeathAudio.Play();
             alive = false;
         }
     }

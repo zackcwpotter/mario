@@ -1,12 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class Brick : MonoBehaviour
 {
-    [Header("Must be checked to spawn a coin!")]
     public bool hasCoin = false;
-    
-    [Header("Drag the Coin from the SCENE HIERARCHY here")]
     public GameObject coin; 
     public AudioClip coinSound; 
 
@@ -16,17 +14,18 @@ public class Brick : MonoBehaviour
     private Vector3 startPosition;
     private bool isUsed = false;
     private bool isBouncing = false;
+    private AudioSource audioSource; // Added AudioSource reference
 
     void Start()
     {
         startPosition = transform.localPosition;
+        audioSource = GetComponent<AudioSource>(); // Get the component
         
         if (coin != null) 
         {
             coin.SetActive(false);
         }
 
-        // Automatically subscribe to the game restart event
         GameManager gm = Object.FindFirstObjectByType<GameManager>();
         if (gm != null)
         {
@@ -58,6 +57,7 @@ public class Brick : MonoBehaviour
 
     private IEnumerator Bounce()
     {
+        // ... (Keep your existing Bounce Coroutine exact logic here)
         isBouncing = true;
         Vector3 topPosition = startPosition + Vector3.up * bounceHeight;
 
@@ -83,9 +83,10 @@ public class Brick : MonoBehaviour
 
     private void SpawnCoin()
     {
+        // Replaced PlayClipAtPoint with the routable AudioSource
         if (coinSound != null)
         {
-            AudioSource.PlayClipAtPoint(coinSound, Camera.main.transform.position);
+            audioSource.PlayOneShot(coinSound);
         }
 
         if (coin != null)
@@ -97,6 +98,7 @@ public class Brick : MonoBehaviour
 
     private IEnumerator MoveCoin(GameObject coinObj)
     {
+        // ... (Keep your existing MoveCoin Coroutine exact logic here)
         Vector3 startCoinPos = coinObj.transform.position;
         Vector3 topPosition = startCoinPos + Vector3.up * 1.5f;
 

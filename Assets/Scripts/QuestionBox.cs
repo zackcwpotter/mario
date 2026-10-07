@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class QuestionBox : MonoBehaviour
 {
     public float bounceHeight = 0.3f;
@@ -17,16 +18,17 @@ public class QuestionBox : MonoBehaviour
     private bool isUsed = false;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
+    private AudioSource audioSource; // Added AudioSource reference
 
     void Start()
     {
         startPosition = transform.localPosition;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>(); // Get the component
 
         if (coin != null) coin.SetActive(false);
 
-        // Automatically subscribe to the game restart event
         GameManager gm = Object.FindFirstObjectByType<GameManager>();
         if (gm != null)
         {
@@ -79,9 +81,10 @@ public class QuestionBox : MonoBehaviour
 
     private void SpawnCoin()
     {
+        // Replaced PlayClipAtPoint with the routable AudioSource
         if (coinSound != null)
         {
-            AudioSource.PlayClipAtPoint(coinSound, Camera.main.transform.position);
+            audioSource.PlayOneShot(coinSound);
         }
 
         if (coin != null)
