@@ -7,17 +7,22 @@ public class AnimationEventIntTool : MonoBehaviour
 {
     public int parameter;
     public UnityEvent<int> useInt;
+    
+    private bool hasTriggered = false;
 
-    void Start()
+    // This resets the score trigger every time the coin pops out of a block
+    void OnEnable()
     {
-    }
-
-    void Update()
-    {
+        hasTriggered = false;
     }
 
     public void TriggerIntEvent()
     {
-        useInt.Invoke(parameter);
+        // Only award points if it hasn't given one yet during this specific popup
+        if (!hasTriggered)
+        {
+            useInt.Invoke(parameter);
+            hasTriggered = true;
+        }
     }
 }
