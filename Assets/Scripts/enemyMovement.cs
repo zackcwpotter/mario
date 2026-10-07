@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class EnemyMovement : MonoBehaviour
 {
-        public Vector3 startPosition; 
+    public Vector3 startPosition; 
+    public AudioClip stompSound; // Slot for your Goomba sound
 
     private float originalX;
     private float maxOffset = 5.0f;
@@ -13,15 +15,14 @@ public class EnemyMovement : MonoBehaviour
     private Vector2 velocity;
 
     private Rigidbody2D enemyBody;
+    private AudioSource audioSource;
 
     void Start()
     {
         enemyBody = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
         
-        //Save the starting position when the game starts
         startPosition = transform.localPosition; 
-        
-        // get the starting position
         originalX = transform.position.x;
         ComputeVelocity();
     }
@@ -40,18 +41,25 @@ public class EnemyMovement : MonoBehaviour
     {
         if (Mathf.Abs(enemyBody.position.x - originalX) < maxOffset)
         {
-            // move goomba
             Movegoomba();
         }
         else
         {
-            // change direction
             moveRight *= -1;
             ComputeVelocity();
             Movegoomba();
         }
     }
     
+    // Call this from PlayerMovement or JumpOverGoomba when Mario squashes it
+    public void PlayStompSound()
+    {
+        if (stompSound != null)
+        {
+            audioSource.PlayOneShot(stompSound);
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         Debug.Log(other.gameObject.name);
