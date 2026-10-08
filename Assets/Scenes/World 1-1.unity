@@ -2600,6 +2600,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: question_bounce (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6895783206189666255, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
+      propertyPath: disabledSprite
+      value: 
+      objectReference: {fileID: -2030686666, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
     - target: {fileID: 7432994382078752003, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
       propertyPath: m_Resource
       value: 
@@ -3484,6 +3488,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: question_bounce (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6895783206189666255, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
+      propertyPath: disabledSprite
+      value: 
+      objectReference: {fileID: -2030686666, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
     - target: {fileID: 7432994382078752003, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
       propertyPath: m_Resource
       value: 
@@ -4458,6 +4466,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: question_bounce (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6895783206189666255, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
+      propertyPath: disabledSprite
+      value: 
+      objectReference: {fileID: -2030686666, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
     - target: {fileID: 7432994382078752003, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
       propertyPath: m_Resource
       value: 
@@ -4745,6 +4757,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: question_mushroom
       objectReference: {fileID: 0}
+    - target: {fileID: 6895783206189666255, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
+      propertyPath: disabledSprite
+      value: 
+      objectReference: {fileID: -2030686666, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
     - target: {fileID: 7432994382078752003, guid: 564b69e712161f04d99f3f4aff1190e2, type: 3}
       propertyPath: m_Resource
       value: 

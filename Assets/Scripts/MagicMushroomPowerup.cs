@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MagicMushroomPowerup : BasePowerup
 {
-    // setup this object's type
-    // instantiate variables
     protected override void Start()
     {
-        base.Start(); // call base class Start()
+        base.Start();
         this.type = PowerupType.MagicMushroom;
     }
 
@@ -19,11 +15,12 @@ public class MagicMushroomPowerup : BasePowerup
             spawned = false;
             gameObject.SetActive(false);
         }
-        else if (col.gameObject.layer == 10) // else if hitting Pipe, flip travel direction
+        else if (col.gameObject.layer == 10)
         {
             if (spawned)
             {
                 goRight = !goRight;
+
                 rigidBody.AddForce(
                     Vector2.right * 3 * (goRight ? 1 : -1),
                     ForceMode2D.Impulse
@@ -32,16 +29,21 @@ public class MagicMushroomPowerup : BasePowerup
         }
     }
 
-    // interface implementation
     public override void SpawnPowerup()
     {
+        if (rigidBody == null)
+            rigidBody = GetComponent<Rigidbody2D>();
+
         spawned = true;
-        rigidBody.AddForce(Vector2.right * 3, ForceMode2D.Impulse);
+
+        rigidBody.AddForce(
+            Vector2.right * 3,
+            ForceMode2D.Impulse
+        );
     }
 
-    // interface implementation
     public override void ApplyPowerup(MonoBehaviour i)
     {
-        // TODO: do something with the object
+        // TODO: implement mushroom effect
     }
 }

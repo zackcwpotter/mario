@@ -2,50 +2,45 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class QuestionBox : MonoBehaviour, IPowerupController
+[RequireComponent(typeof(QuestionBoxPowerupController))]
+public class QuestionBox : MonoBehaviour
 {
     public float bounceHeight = 0.3f;
     public float bounceDuration = 0.15f;
 
-    public GameObject coin; 
-    public AudioClip coinSound; 
+    public GameObject coin;
+    public AudioClip coinSound;
     public MagicMushroomPowerup mushroom;
 
     private Vector3 startPosition;
-    private bool isBouncing = false;
-
-    public Sprite disabledSprite;
-
-    private bool isUsed = false;
-    private SpriteRenderer spriteRenderer;
-    private Animator animator;
-    private AudioSource audioSource; // Added AudioSource reference
-
     private Vector3 mushroomStartPosition;
-    private bool mushroomInitiallyActive;
-    
+
+    private bool isBouncing = false;
+    private bool isUsed = false;
+
+    private AudioSource audioSource;
+    private QuestionBoxPowerupController powerupController;
+    private Rigidbody2D mushroomBody;
 
     void Start()
     {
         startPosition = transform.localPosition;
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>(); // Get the component
+
+        audioSource = GetComponent<AudioSource>();
+        powerupController = GetComponent<QuestionBoxPowerupController>();
+
+        if (coin != null)
+            coin.SetActive(false);
 
         if (mushroom != null)
         {
             mushroomStartPosition = mushroom.transform.position;
-            mushroomInitiallyActive = mushroom.gameObject.activeSelf;
+            mushroomBody = mushroom.GetComponent<Rigidbody2D>();
             mushroom.gameObject.SetActive(false);
         }
 
-        if (coin != null) coin.SetActive(false);
-
-        GameManager gm = Object.FindFirstObjectByType<GameManager>();
-        if (gm != null)
-        {
-            gm.gameRestart.AddListener(ResetBox);
-        }
+        if (GameManager.instance != null)
+            GameManager.instance.gameRestart.AddListener(ResetBox);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -58,10 +53,12 @@ public class QuestionBox : MonoBehaviour, IPowerupController
             if (contact.normal.y > 0.5f && !isBouncing && !isUsed)
             {
                 isUsed = true;
+
                 StartCoroutine(Bounce());
+
                 if (mushroom != null)
                 {
-                    Debug.Log("Spawning mushroom!");
+                    mushroom.transform.position = mushroomStartPosition;
                     mushroom.gameObject.SetActive(true);
                     mushroom.SpawnPowerup();
                 }
@@ -75,39 +72,52 @@ public class QuestionBox : MonoBehaviour, IPowerupController
         }
     }
 
-    private IEnumerator Bounce() 
+    private IEnumerator Bounce()
     {
         isBouncing = true;
+
         Vector3 topPosition = startPosition + Vector3.up * bounceHeight;
 
         float time = 0f;
+
         while (time < bounceDuration)
         {
             time += Time.deltaTime;
-            transform.localPosition = Vector3.Lerp(startPosition, topPosition, time / bounceDuration);
+
+            transform.localPosition = Vector3.Lerp(
+                startPosition,
+                topPosition,
+                time / bounceDuration
+            );
+
             yield return null;
         }
 
         time = 0f;
+
         while (time < bounceDuration)
         {
             time += Time.deltaTime;
-            transform.localPosition = Vector3.Lerp(topPosition, startPosition, time / bounceDuration);
+
+            transform.localPosition = Vector3.Lerp(
+                topPosition,
+                startPosition,
+                time / bounceDuration
+            );
+
             yield return null;
         }
 
         transform.localPosition = startPosition;
         isBouncing = false;
-        DisableQuestionBox();
+
+        powerupController.Disable();
     }
 
     private void SpawnCoin()
     {
-        // Replaced PlayClipAtPoint with the routable AudioSource
         if (coinSound != null)
-        {
             audioSource.PlayOneShot(coinSound);
-        }
 
         if (coin != null)
         {
@@ -127,37 +137,47 @@ public class QuestionBox : MonoBehaviour, IPowerupController
         while (time < duration)
         {
             time += Time.deltaTime;
-            coinObj.transform.position = Vector3.Lerp(startCoinPos, topPosition, time / duration);
+
+            coinObj.transform.position = Vector3.Lerp(
+                startCoinPos,
+                topPosition,
+                time / duration
+            );
+
             yield return null;
         }
 
         time = 0f;
+
         while (time < duration)
         {
             time += Time.deltaTime;
-            coinObj.transform.position = Vector3.Lerp(topPosition, startCoinPos, time / duration);
+
+            coinObj.transform.position = Vector3.Lerp(
+                topPosition,
+                startCoinPos,
+                time / duration
+            );
+
             yield return null;
         }
 
         coinObj.SetActive(false);
     }
 
-    private void DisableQuestionBox()
-    {
-        animator.enabled = false;
-        spriteRenderer.sprite = disabledSprite;
-    }
-
     public void ResetBox()
     {
+        StopAllCoroutines();
+
         isUsed = false;
         isBouncing = false;
+
         transform.localPosition = startPosition;
 
-        animator.enabled = true;
-        animator.Play("QuestionBoxBlink", 0, 0f);
+        powerupController.ResetBox();
 
-        if (coin != null) coin.SetActive(false);
+        if (coin != null)
+            coin.SetActive(false);
 
         if (mushroom != null)
         {
@@ -165,17 +185,17 @@ public class QuestionBox : MonoBehaviour, IPowerupController
             mushroom.transform.position = mushroomStartPosition;
             mushroom.spawned = false;
 
-            Rigidbody2D rb = mushroom.GetComponent<Rigidbody2D>();
-            if (rb != null)
+            if (mushroomBody != null)
             {
-                rb.linearVelocity = Vector2.zero;
-                rb.angularVelocity = 0f;
+                mushroomBody.linearVelocity = Vector2.zero;
+                mushroomBody.angularVelocity = 0f;
             }
         }
     }
 
-    public void Disable()
+    void OnDestroy()
     {
-        DisableQuestionBox();
+        if (GameManager.instance != null)
+            GameManager.instance.gameRestart.RemoveListener(ResetBox);
     }
 }
