@@ -2,13 +2,14 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class QuestionBox : MonoBehaviour
+public class QuestionBox : MonoBehaviour, IPowerupController
 {
     public float bounceHeight = 0.3f;
     public float bounceDuration = 0.15f;
 
     public GameObject coin; 
     public AudioClip coinSound; 
+    public MagicMushroomPowerup mushroom;
 
     private Vector3 startPosition;
     private bool isBouncing = false;
@@ -20,12 +21,23 @@ public class QuestionBox : MonoBehaviour
     private Animator animator;
     private AudioSource audioSource; // Added AudioSource reference
 
+    private Vector3 mushroomStartPosition;
+    private bool mushroomInitiallyActive;
+    
+
     void Start()
     {
         startPosition = transform.localPosition;
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>(); // Get the component
+
+        if (mushroom != null)
+        {
+            mushroomStartPosition = mushroom.transform.position;
+            mushroomInitiallyActive = mushroom.gameObject.activeSelf;
+            mushroom.gameObject.SetActive(false);
+        }
 
         if (coin != null) coin.SetActive(false);
 
@@ -47,8 +59,17 @@ public class QuestionBox : MonoBehaviour
             {
                 isUsed = true;
                 StartCoroutine(Bounce());
-                SpawnCoin();
-                DisableQuestionBox();
+                if (mushroom != null)
+                {
+                    Debug.Log("Spawning mushroom!");
+                    mushroom.gameObject.SetActive(true);
+                    mushroom.SpawnPowerup();
+                }
+                else
+                {
+                    SpawnCoin();
+                }
+
                 break;
             }
         }
@@ -77,6 +98,7 @@ public class QuestionBox : MonoBehaviour
 
         transform.localPosition = startPosition;
         isBouncing = false;
+        DisableQuestionBox();
     }
 
     private void SpawnCoin()
@@ -136,5 +158,24 @@ public class QuestionBox : MonoBehaviour
         animator.Play("QuestionBoxBlink", 0, 0f);
 
         if (coin != null) coin.SetActive(false);
+
+        if (mushroom != null)
+        {
+            mushroom.gameObject.SetActive(false);
+            mushroom.transform.position = mushroomStartPosition;
+            mushroom.spawned = false;
+
+            Rigidbody2D rb = mushroom.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+            }
+        }
+    }
+
+    public void Disable()
+    {
+        DisableQuestionBox();
     }
 }
