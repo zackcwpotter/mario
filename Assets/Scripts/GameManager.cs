@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Audio; // Required for AudioMixer snapshots
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public UnityEvent gameStart;
     public UnityEvent gameRestart;
@@ -21,6 +22,8 @@ public class GameManager : MonoBehaviour
     {
         gameStart.Invoke();
         Time.timeScale = 1.0f;
+
+        SceneManager.activeSceneChanged += SceneSetup;
     }
 
     public void GameRestart()
@@ -58,5 +61,11 @@ public class GameManager : MonoBehaviour
         {
             sadGameOverSnapshot.TransitionTo(0f);
         }
+    }
+
+    public void SceneSetup(Scene current, Scene next)
+    {
+        gameStart.Invoke();
+        SetScore(score);
     }
 }

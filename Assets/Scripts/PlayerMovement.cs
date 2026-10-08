@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 25;
     public float maxSpeed = 30;
     public float upSpeed = 10;
     private bool moving = false;
-
-    // Added reference to GameManager as per the refactoring instructions
-    public GameManager gameManager;
 
     int collisionLayerMask = (1 << 6) | (1 << 7) | (1 << 8);
 
@@ -46,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
 
         // update animator state
         marioAnimator.SetBool("onGround", onGroundState);
+
+        GameManager.instance.gameRestart.AddListener(GameRestart);
+
     }
 
     void Update()
@@ -132,11 +133,7 @@ public class PlayerMovement : MonoBehaviour
 
     void GameOverScene()
     {
-        // Delegate the GameOver handling entirely to the GameManager
-        if (gameManager != null)
-        {
-            gameManager.GameOver();
-        }
+        GameManager.instance.GameOver();
     }
 
     void PlayJumpSound()
