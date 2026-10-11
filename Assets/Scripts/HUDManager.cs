@@ -22,6 +22,7 @@ public class HUDManager : MonoBehaviour
         GameManager.instance.gameOver.AddListener(GameOver);
 
         GameStart();
+        SetScore(GameManager.instance.gameScore.Value);
     }
 
     public void GameStart()

@@ -8,8 +8,7 @@ public class EnemyManager : MonoBehaviour
 
     void Start()
     {
-        gameManager = GameObject.FindGameObjectWithTag("Manager")
-            .GetComponent<GameManager>();
+        gameManager = GameManager.instance;
 
         // Subscribe to each Goomba's stomp event
         foreach (Transform child in transform)

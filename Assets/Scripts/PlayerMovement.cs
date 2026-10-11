@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 25;
-    public float maxSpeed = 30;
-    public float upSpeed = 10;
+    public GameConstants gameConstants;
+
+    private float speed;
+    private float maxSpeed;
+    private float upSpeed;
     private bool moving = false;
 
     int collisionLayerMask = (1 << 6) | (1 << 7) | (1 << 8);
@@ -29,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioSource marioAudio;
 
     public AudioSource marioDeathAudio;
-    public float deathImpulse = 15;
+    public float deathImpulse;
 
     // state
     [System.NonSerialized]
@@ -37,6 +39,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        speed = gameConstants.speed;
+        maxSpeed = gameConstants.maxSpeed;
+        upSpeed = gameConstants.upSpeed;
+        deathImpulse = gameConstants.deathImpulse;
+
         Application.targetFrameRate = 30;
         marioBody = GetComponent<Rigidbody2D>();
         marioSprite = GetComponent<SpriteRenderer>();

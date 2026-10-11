@@ -16,7 +16,7 @@ public class GameManager : Singleton<GameManager>
     public AudioMixerSnapshot normalSnapshot;
     public AudioMixerSnapshot sadGameOverSnapshot;
 
-    private int score = 0;
+    public IntVariable gameScore;
 
     void Start()
     {
@@ -28,8 +28,9 @@ public class GameManager : Singleton<GameManager>
 
     public void GameRestart()
     {
-        score = 0;
-        SetScore(score);
+        gameScore.Value = 0;
+        
+        SetScore(gameScore.Value);
         gameRestart.Invoke();
         Time.timeScale = 1.0f;
 
@@ -42,8 +43,9 @@ public class GameManager : Singleton<GameManager>
 
     public void IncreaseScore(int increment)
     {
-        score += increment;
-        SetScore(score);
+        gameScore.ApplyChange(increment);
+        Debug.Log("Score increased to: " + gameScore.Value);
+        SetScore(gameScore.Value);
     }
 
     public void SetScore(int score)
@@ -66,6 +68,8 @@ public class GameManager : Singleton<GameManager>
     public void SceneSetup(Scene current, Scene next)
     {
         gameStart.Invoke();
-        SetScore(score);
+
+        Debug.Log("Score after scene change: " + gameScore.Value);
+        SetScore(gameScore.Value);
     }
 }
