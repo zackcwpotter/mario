@@ -20,10 +20,12 @@ public class GameManager : Singleton<GameManager>
 
     void Start()
     {
+        gameScore.Value = 0; // Reset score when starting a new game
         gameStart.Invoke();
         Time.timeScale = 1.0f;
 
         SceneManager.activeSceneChanged += SceneSetup;
+        
     }
 
     public void GameRestart()
@@ -44,7 +46,7 @@ public class GameManager : Singleton<GameManager>
     public void IncreaseScore(int increment)
     {
         gameScore.ApplyChange(increment);
-        Debug.Log("Score increased to: " + gameScore.Value);
+        gameScore.SaveHighScore();
         SetScore(gameScore.Value);
     }
 

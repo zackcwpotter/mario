@@ -33,4 +33,15 @@ public class IntVariable : Variable<int>
     {
         previousHighestValue = 0;
     }
+
+    public void SaveHighScore()
+    {
+        PlayerPrefs.SetInt("HighScore", previousHighestValue);
+        PlayerPrefs.Save();
+    }
+
+    private void OnEnable()
+    {
+        previousHighestValue = PlayerPrefs.GetInt("HighScore", 0);
+    }
 }

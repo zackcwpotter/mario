@@ -9,6 +9,9 @@ public class HUDManager : MonoBehaviour
 
     private RectTransform scoreRect;
 
+    public IntVariable gameScore;
+    public GameObject highscoreText;
+
     void Awake()
     {
         scoreRect = scoreText.GetComponent<RectTransform>();
@@ -20,14 +23,16 @@ public class HUDManager : MonoBehaviour
         GameManager.instance.gameRestart.AddListener(GameStart);
         GameManager.instance.scoreChange.AddListener(SetScore);
         GameManager.instance.gameOver.AddListener(GameOver);
-
+        
         GameStart();
+        Debug.Log("HUD Start score: " + GameManager.instance.gameScore.Value);
         SetScore(GameManager.instance.gameScore.Value);
     }
 
     public void GameStart()
     {
         gameOverPanel.SetActive(false);
+        highscoreText.SetActive(false);
 
         // Score: top left
         scoreRect.anchorMin = new Vector2(0, 1);
@@ -63,6 +68,11 @@ public class HUDManager : MonoBehaviour
         restartButton.anchorMax = new Vector2(0.5f, 0.5f);
         restartButton.pivot = new Vector2(0.5f, 0.5f);
         restartButton.anchoredPosition = new Vector2(0, -190);
+
+        highscoreText.GetComponent<TextMeshProUGUI>().text =
+            "High Score: " + gameScore.previousHighestValue.ToString("D3");
+
+        highscoreText.SetActive(true);
     }
 
     void OnDestroy()
