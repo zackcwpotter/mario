@@ -14,8 +14,8 @@ public class EnemyMovement : MonoBehaviour
     public event GoombaStompHandler OnGoombaStomp;
 
     private float originalX;
-    private float maxOffset = 5.0f;
-    private float enemyPatroltime = 2.0f;
+    private float maxOffset;
+    private float enemyPatroltime;
     private int moveRight = -1;
     private Vector2 velocity;
 
@@ -26,8 +26,13 @@ public class EnemyMovement : MonoBehaviour
 
     private bool stomped = false;
 
+    public GameConstants gameConstants;
+
     void Start()
     {
+        maxOffset = gameConstants.goombaMaxOffset;
+        enemyPatroltime = gameConstants.goombaPatrolTime;
+        
         enemyBody = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
         spriteRenderer = GetComponent<SpriteRenderer>();

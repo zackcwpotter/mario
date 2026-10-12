@@ -14,6 +14,8 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        
         // Calculate half of the camera's visible width
         viewportHalfWidth = Camera.main.orthographicSize * Camera.main.aspect;
 
@@ -25,6 +27,8 @@ public class CameraController : MonoBehaviour
 
         // Camera stops before showing anything beyond EndLimit
         endX = endLimit.position.x - viewportHalfWidth;
+
+        
     }
 
     void Update()

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Audio; // Required for AudioMixer snapshots
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     public UnityEvent gameStart;
     public UnityEvent gameRestart;
@@ -15,18 +16,23 @@ public class GameManager : MonoBehaviour
     public AudioMixerSnapshot normalSnapshot;
     public AudioMixerSnapshot sadGameOverSnapshot;
 
-    private int score = 0;
+    public IntVariable gameScore;
 
     void Start()
     {
+        gameScore.Value = 0; // Reset score when starting a new game
         gameStart.Invoke();
         Time.timeScale = 1.0f;
+
+        SceneManager.activeSceneChanged += SceneSetup;
+        
     }
 
     public void GameRestart()
     {
-        score = 0;
-        SetScore(score);
+        gameScore.Value = 0;
+        
+        SetScore(gameScore.Value);
         gameRestart.Invoke();
         Time.timeScale = 1.0f;
 
@@ -39,8 +45,9 @@ public class GameManager : MonoBehaviour
 
     public void IncreaseScore(int increment)
     {
-        score += increment;
-        SetScore(score);
+        gameScore.ApplyChange(increment);
+        gameScore.SaveHighScore();
+        SetScore(gameScore.Value);
     }
 
     public void SetScore(int score)
@@ -58,5 +65,13 @@ public class GameManager : MonoBehaviour
         {
             sadGameOverSnapshot.TransitionTo(0f);
         }
+    }
+
+    public void SceneSetup(Scene current, Scene next)
+    {
+        gameStart.Invoke();
+
+        Debug.Log("Score after scene change: " + gameScore.Value);
+        SetScore(gameScore.Value);
     }
 }

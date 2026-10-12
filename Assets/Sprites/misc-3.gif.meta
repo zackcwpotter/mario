@@ -436,11 +436,11 @@ TextureImporter:
         serializedVersion: 2
         x: 70
         y: 1192
-        width: 18
+        width: 17
         height: 18
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 1, y: 1, z: 0, w: 1}
       customData: 
       outline: []
       physicsShape: []
@@ -745,9 +745,9 @@ TextureImporter:
         x: 228
         y: 343
         width: 16
-        height: 8
+        height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -756,6 +756,50 @@ TextureImporter:
       bones: []
       spriteID: 9b054d1ee3a08dd4a83f3cb3300fe785
       internalID: 153031826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: castle
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 954
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b25f85912f339c4f9f6302666a69b4b
+      internalID: 249663380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: misc-3_6
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 774
+        width: 96
+        height: 141
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2eaaede5708bf744b991f62626902bfe
+      internalID: 727674680
       vertices: []
       indices: 
       edges: []
@@ -780,6 +824,7 @@ TextureImporter:
       3cloud: 1669181242
       big_hill: -1214603271
       brownFloor: 1094453920
+      castle: 249663380
       coin: 263555830
       coin-spin2: -1721966518
       coin-spin3: -1961781012
@@ -793,6 +838,7 @@ TextureImporter:
       misc-3_3: 1949458612
       misc-3_4: -1712528339
       misc-3_5: 1163410058
+      misc-3_6: 727674680
       mushroom: 1199412830
       pipe_body: 95445106
       pipe_head: 1383931381

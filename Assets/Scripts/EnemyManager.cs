@@ -8,8 +8,8 @@ public class EnemyManager : MonoBehaviour
 
     void Start()
     {
-        gameManager = GameObject.FindGameObjectWithTag("Manager")
-            .GetComponent<GameManager>();
+        gameManager = GameManager.instance;
+        gameManager.gameRestart.AddListener(GameRestart);
 
         // Subscribe to each Goomba's stomp event
         foreach (Transform child in transform)
@@ -40,6 +40,14 @@ public class EnemyManager : MonoBehaviour
             {
                 enemy.GameRestart();
             }
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (gameManager != null)
+        {
+            gameManager.gameRestart.RemoveListener(GameRestart);
         }
     }
 }
