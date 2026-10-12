@@ -174,7 +174,7 @@ public class QuestionBox : MonoBehaviour
 
         transform.localPosition = startPosition;
 
-        powerupController.ResetBox();
+        //powerupController.ResetBox();
 
         if (coin != null)
             coin.SetActive(false);

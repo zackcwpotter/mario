@@ -1,40 +1,32 @@
 using UnityEngine;
-
 public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
 {
-    public Sprite disabledSprite;
+    public Animator powerupAnimator;
+    public BasePowerup powerup;
+    private bool isUsed = false; // 1. Prevents activating an already-used block
 
-    private SpriteRenderer spriteRenderer;
-    private Animator animator;
-    private Sprite originalSprite;
-
-    void Awake()
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        animator = GetComponent<Animator>();
+        // 2. Check if the block has already been used, and check that powerup is not null
+        if (other.gameObject.CompareTag("Player") && !isUsed && powerup != null && !powerup.hasSpawned)
+        {
+            isUsed = true;
 
-        if (spriteRenderer != null)
-            originalSprite = spriteRenderer.sprite;
+            // Trigger disabled block animation on the box
+            GetComponent<Animator>().SetTrigger("spawned");
+
+            // 3. Null check: only trigger the animator if it hasn't been destroyed
+            if (powerupAnimator != null)
+            {
+                powerupAnimator.SetTrigger("spawned");
+            }
+        }
     }
 
+    // Called by the Animation Event in question_disabled.anim
     public void Disable()
     {
-        if (animator != null)
-            animator.enabled = false;
-
-        if (spriteRenderer != null && disabledSprite != null)
-            spriteRenderer.sprite = disabledSprite;
-    }
-
-    public void ResetBox()
-    {
-        if (spriteRenderer != null)
-            spriteRenderer.sprite = originalSprite;
-
-        if (animator != null)
-        {
-            animator.enabled = true;
-            animator.Play("QuestionBoxBlink", 0, 0f);
-        }
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        transform.localPosition = Vector3.zero;
     }
 }

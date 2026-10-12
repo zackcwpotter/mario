@@ -85,6 +85,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 1193303918272811402, guid: fcbc9f73a74e12e4080681510fe44453, type: 3}
+      propertyPath: powerup
+      value: 
+      objectReference: {fileID: 1519681008543163016}
+    - target: {fileID: 1193303918272811402, guid: fcbc9f73a74e12e4080681510fe44453, type: 3}
+      propertyPath: powerupAnimator
+      value: 
+      objectReference: {fileID: 7729936933463001748}
     - target: {fileID: 4941505330912370616, guid: fcbc9f73a74e12e4080681510fe44453, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.045
@@ -316,9 +324,25 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e56920a37b25ba47bd26be5e1ccabe4, type: 3}
+--- !u!114 &1519681008543163016 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7374813102337153087, guid: 8e56920a37b25ba47bd26be5e1ccabe4, type: 3}
+  m_PrefabInstance: {fileID: 8308689010292472503}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7751184646633551500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9693eb4fb7a3d74e911f56bd8a90d61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoinPowerup
 --- !u!4 &6649651514565582752 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3388442430612006167, guid: 8e56920a37b25ba47bd26be5e1ccabe4, type: 3}
+  m_PrefabInstance: {fileID: 8308689010292472503}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7729936933463001748 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1731673697939402787, guid: 8e56920a37b25ba47bd26be5e1ccabe4, type: 3}
   m_PrefabInstance: {fileID: 8308689010292472503}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &7751184646633551500 stripped
