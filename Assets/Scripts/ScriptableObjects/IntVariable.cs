@@ -32,6 +32,7 @@ public class IntVariable : Variable<int>
     public void ResetHighestValue()
     {
         previousHighestValue = 0;
+        SaveHighScore();
     }
 
     public void SaveHighScore()

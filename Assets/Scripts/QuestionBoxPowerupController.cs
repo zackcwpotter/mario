@@ -191,7 +191,7 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Player") && !isUsed)
+        if (other.gameObject.CompareTag("Player") && !isUsed && HitFromBelow(other))
         {
             isUsed = true;
 
@@ -228,6 +228,18 @@ public class QuestionBoxPowerupController : MonoBehaviour, IPowerupController
                 audioSource.PlayOneShot(clipToPlay);
             }
         }
+    }
+
+    // Only Mario bumping the box from below should spawn the powerup,
+    // landing on top of it must not (same check as BrickPowerupController)
+    private bool HitFromBelow(Collision2D other)
+    {
+        foreach (ContactPoint2D contact in other.contacts)
+        {
+            if (contact.normal.y > 0.5f)
+                return true;
+        }
+        return false;
     }
 
     private System.Collections.IEnumerator SpawnPowerupRoutine(float delay)

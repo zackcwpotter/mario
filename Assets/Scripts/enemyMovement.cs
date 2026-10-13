@@ -139,6 +139,8 @@ public class EnemyMovement : MonoBehaviour
 
     public void GameRestart()
     {
+        // stop a pending HideAfterStomp so it can't hide the Goomba after restart
+        StopAllCoroutines();
         stomped = false;
 
         spriteRenderer.enabled = true;

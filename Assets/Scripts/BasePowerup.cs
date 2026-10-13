@@ -32,7 +32,7 @@ public abstract class BasePowerup : MonoBehaviour, IPowerup
         }
     }
 
-    public void DestroyPowerup()
+    public virtual void DestroyPowerup()
     {
         Destroy(this.gameObject);
     }
