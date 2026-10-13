@@ -15,6 +15,22 @@ public class PauseButtonController : MonoBehaviour, IInteractiveButton
     {
         image = GetComponent<Image>();
         AudioListener.pause = false;
+
+        GameManager.instance.gameRestart.AddListener(ResetPause);
+    }
+
+    // restarting while paused must unpause the game and the audio
+    public void ResetPause()
+    {
+        isPaused = false;
+        AudioListener.pause = false;
+        image.sprite = pauseIcon;
+    }
+
+    void OnDestroy()
+    {
+        if (GameManager.instance != null)
+            GameManager.instance.gameRestart.RemoveListener(ResetPause);
     }
 
     // Update is called once per frame

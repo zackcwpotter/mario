@@ -27,7 +27,7 @@ public class CoinPowerup : BasePowerup
     }
 
     // 1. Deactivate instead of deleting
-    public void DestroyPowerup()
+    public override void DestroyPowerup()
     {
         gameObject.SetActive(false);
     }
