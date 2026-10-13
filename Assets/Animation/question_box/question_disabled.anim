@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: coinSpin
+  m_Name: question_disabled
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,21 +21,15 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -1736433935, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
-    - time: 0.06666667
-      value: {fileID: -1961781012, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
-    - time: 0.15555556
-      value: {fileID: -1637606393, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
-    - time: 0.24444444
-      value: {fileID: -1721966518, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
-    - time: 0.33333334
-      value: {fileID: -1736433935, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+      value: {fileID: -2030686666, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+    - time: 0.05
+      value: {fileID: -2030686666, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 45
+  m_SampleRate: 60
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -52,17 +46,14 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -1736433935, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
-    - {fileID: -1961781012, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
-    - {fileID: -1637606393, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
-    - {fileID: -1721966518, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
-    - {fileID: -1736433935, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+    - {fileID: -2030686666, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
+    - {fileID: -2030686666, guid: 82bc45c4496284f4c823d1b837f65ec4, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.35555556
+    m_StopTime: 0.06666667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -82,8 +73,8 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.24444444
-    functionName: TriggerIntEvent
+  - time: 0.05
+    functionName: Disable
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
