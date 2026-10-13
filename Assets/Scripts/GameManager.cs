@@ -67,6 +67,21 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public void ReturnToMenu()
+    {
+        // leave the game in a clean state, so the next Start Game begins fresh
+        gameScore.Value = 0;
+        Time.timeScale = 1.0f;
+        AudioListener.pause = false;
+
+        if (normalSnapshot != null)
+        {
+            normalSnapshot.TransitionTo(0f);
+        }
+
+        SceneManager.LoadScene("Main Menu");
+    }
+
     public void SceneSetup(Scene current, Scene next)
     {
         gameStart.Invoke();
