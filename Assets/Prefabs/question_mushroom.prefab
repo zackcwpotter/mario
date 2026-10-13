@@ -205,8 +205,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5939637411194977823}
   - component: {fileID: 5970486415090657035}
-  - component: {fileID: 4997378282378194786}
-  - component: {fileID: 642380723853923642}
   m_Layer: 0
   m_Name: Powerup
   m_TagString: Untagged
@@ -223,7 +221,7 @@ Transform:
   m_GameObject: {fileID: 8259939500547624305}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.52500004, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -244,79 +242,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MagicMushroomPowerup
   type: 1
   spawned: 0
---- !u!61 &4997378282378194786
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8259939500547624305}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.594084}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 1, y: 0.84780765}
-  m_EdgeRadius: 0
---- !u!50 &642380723853923642
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8259939500547624305}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 454c44cdfc983c24aa7396a4abdfb65c, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  powerupSound: {fileID: 8300000, guid: 26301d2e86e99420599e315297a825df, type: 3}
+  speed: 3
+  goRight: 1
 --- !u!1001 &609158408884368430
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -339,7 +267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2881180928557219491, guid: 2ba0069e334a4f640bb2518040a78899, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.504
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2881180928557219491, guid: 2ba0069e334a4f640bb2518040a78899, type: 3}
       propertyPath: m_LocalPosition.z
@@ -397,13 +325,33 @@ PrefabInstance:
     - {fileID: 4207292676496033326, guid: 2ba0069e334a4f640bb2518040a78899, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5274121510673843525, guid: 2ba0069e334a4f640bb2518040a78899, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2286781142691343828}
   m_SourcePrefab: {fileID: 100100000, guid: 2ba0069e334a4f640bb2518040a78899, type: 3}
 --- !u!4 &3425032126179232397 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2881180928557219491, guid: 2ba0069e334a4f640bb2518040a78899, type: 3}
   m_PrefabInstance: {fileID: 609158408884368430}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4703266310686552427 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5274121510673843525, guid: 2ba0069e334a4f640bb2518040a78899, type: 3}
+  m_PrefabInstance: {fileID: 609158408884368430}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2286781142691343828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4703266310686552427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b633161221293a4f98326ec66e84607, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MushroomCollisionRelay
 --- !u!95 &5942907766399711006 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6488941010047238960, guid: 2ba0069e334a4f640bb2518040a78899, type: 3}
@@ -441,6 +389,10 @@ PrefabInstance:
       propertyPath: powerup
       value: 
       objectReference: {fileID: 5970486415090657035}
+    - target: {fileID: 1193303918272811402, guid: fcbc9f73a74e12e4080681510fe44453, type: 3}
+      propertyPath: coinSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 97a450c65284a4a3094ba5c2221a492b, type: 3}
     - target: {fileID: 1193303918272811402, guid: fcbc9f73a74e12e4080681510fe44453, type: 3}
       propertyPath: disabledSprite
       value: 
@@ -596,7 +548,7 @@ SpringJoint2D:
   m_ConnectedAnchor: {x: 0, y: 1}
   m_AutoConfigureDistance: 0
   m_Distance: 1
-  m_DampingRatio: 0
+  m_DampingRatio: 0.8
   m_Frequency: 5
 --- !u!95 &9116581926631761594
 Animator:

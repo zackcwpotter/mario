@@ -221,7 +221,7 @@ Transform:
   m_GameObject: {fileID: 8259939500547624305}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.52500004, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8259939500547624305}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9693eb4fb7a3d74e911f56bd8a90d61, type: 3}
   m_Name: 
@@ -268,11 +268,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3388442430612006167, guid: 8e56920a37b25ba47bd26be5e1ccabe4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.02
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3388442430612006167, guid: 8e56920a37b25ba47bd26be5e1ccabe4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.53
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3388442430612006167, guid: 8e56920a37b25ba47bd26be5e1ccabe4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -375,7 +375,11 @@ PrefabInstance:
     - target: {fileID: 1193303918272811402, guid: fcbc9f73a74e12e4080681510fe44453, type: 3}
       propertyPath: powerup
       value: 
-      objectReference: {fileID: 7374813102337153087, guid: 8e56920a37b25ba47bd26be5e1ccabe4, type: 3}
+      objectReference: {fileID: 7614402881990872260}
+    - target: {fileID: 1193303918272811402, guid: fcbc9f73a74e12e4080681510fe44453, type: 3}
+      propertyPath: coinSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d885ffc842af744d89f7d595ffcc176a, type: 3}
     - target: {fileID: 1193303918272811402, guid: fcbc9f73a74e12e4080681510fe44453, type: 3}
       propertyPath: disabledSprite
       value: 

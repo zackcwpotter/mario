@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4941505330912370616}
   - component: {fileID: 8797222182695812237}
   - component: {fileID: 8325816299616058073}
-  - component: {fileID: -8427764734437423028}
   - component: {fileID: 2889768206270376774}
   - component: {fileID: 1193303918272811402}
   m_Layer: 0
@@ -141,23 +140,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.0434628, y: 1.025343}
   m_EdgeRadius: 0
---- !u!114 &-8427764734437423028
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 289849236102379913}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 660681ceb8849f34d90a19d2d9452d25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::QuestionBox
-  bounceHeight: 0.5
-  bounceDuration: 0.05
-  coin: {fileID: 0}
-  coinSound: {fileID: 8300000, guid: d885ffc842af744d89f7d595ffcc176a, type: 3}
-  mushroom: {fileID: 0}
 --- !u!82 &2889768206270376774
 AudioSource:
   m_ObjectHideFlags: 0
