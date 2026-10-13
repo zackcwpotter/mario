@@ -14,6 +14,7 @@ public class PauseButtonController : MonoBehaviour, IInteractiveButton
     void Start()
     {
         image = GetComponent<Image>();
+        AudioListener.pause = false;
     }
 
     // Update is called once per frame
@@ -26,6 +27,8 @@ public class PauseButtonController : MonoBehaviour, IInteractiveButton
     {
         Time.timeScale = isPaused ? 1.0f : 0.0f;
         isPaused = !isPaused;
+        AudioListener.pause = isPaused;
+
         if (isPaused)
         {
             image.sprite = playIcon;

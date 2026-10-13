@@ -5,7 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     public void StartGame()
     {
-        //GameData.Lives = 3;
+        //GameData.Lives = 3; --todo
         SceneManager.LoadScene("Loading Scene");
     }
 
