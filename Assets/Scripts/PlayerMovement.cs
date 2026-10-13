@@ -69,6 +69,9 @@ public class PlayerMovement : MonoBehaviour
         if (!alive)
             return;
 
+        if (Time.timeScale == 0f)
+            return;
+
         if (value == -1 && faceRightState)
         {
             faceRightState = false;
@@ -153,6 +156,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
+        if (Time.timeScale == 0f)
+            return;
+
         if (alive && onGroundState)
         {
             // jump
@@ -205,18 +211,32 @@ public class PlayerMovement : MonoBehaviour
         // re-enable collider
         GetComponent<Collider2D>().enabled = true;
 
-        // reset position
+        // reset position and stop any leftover death velocity
         marioBody.transform.position = startPosition;
+        marioBody.linearVelocity = Vector2.zero;
 
         // reset sprite direction
         faceRightState = true;
         marioSprite.flipX = false;
 
-        // reset animation
-        marioAnimator.SetTrigger("gameRestart");
+        // reset animation: jump straight to idle instead of waiting for the
+        // mario-die -> idle transition (it has exit time, so it can get stuck)
+        marioAnimator.Play("mario-idle", 0, 0f);
+        onGroundState = true;
+        jumpedState = false;
+        moving = false;
+        marioAnimator.SetBool("onGround", true);
         alive = true;
 
         // reset camera position
         gameCamera.position = new Vector3(0.47f, 1f, -36.1f);
+    }
+
+    void OnDestroy()
+    {
+        if (GameManager.instance == null)
+            return;
+
+        GameManager.instance.gameRestart.RemoveListener(GameRestart);
     }
 }

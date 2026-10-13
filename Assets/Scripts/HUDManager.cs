@@ -12,6 +12,8 @@ public class HUDManager : MonoBehaviour
     public IntVariable gameScore;
     public GameObject highscoreText;
 
+    public GameObject pauseButton;
+
     void Awake()
     {
         scoreRect = scoreText.GetComponent<RectTransform>();
@@ -33,6 +35,8 @@ public class HUDManager : MonoBehaviour
     {
         gameOverPanel.SetActive(false);
         highscoreText.SetActive(false);
+        if (pauseButton != null)
+            pauseButton.SetActive(true);
 
         // Score: top left
         scoreRect.anchorMin = new Vector2(0, 1);
@@ -56,6 +60,8 @@ public class HUDManager : MonoBehaviour
     public void GameOver()
     {
         gameOverPanel.SetActive(true);
+        if (pauseButton != null)
+            pauseButton.SetActive(false);
 
         // Score: centered below Game Over text
         scoreRect.anchorMin = new Vector2(0.5f, 0.5f);
