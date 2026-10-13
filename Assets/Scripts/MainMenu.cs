@@ -5,6 +5,6 @@ public class MainMenu : MonoBehaviour
 {
     public void StartGame()
     {
-        Debug.Log("Start Game ble trykket");
+        SceneManager.LoadScene("Loading Scene");
     }
 }
