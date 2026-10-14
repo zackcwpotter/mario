@@ -134,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
         marioDeathAudio.Play();
 
         alive = false;
+        GameManager.instance.playerDeath.Invoke();
     }
 
     void PlayDeathImpulse()

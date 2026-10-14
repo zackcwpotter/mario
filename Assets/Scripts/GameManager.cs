@@ -18,6 +18,8 @@ public class GameManager : Singleton<GameManager>
 
     public IntVariable gameScore;
 
+    public UnityEvent playerDeath;
+
     void Start()
     {
         gameScore.Value = 0; // Reset score when starting a new game

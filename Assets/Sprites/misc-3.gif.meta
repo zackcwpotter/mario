@@ -804,6 +804,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: castleHelper
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 954
+        width: 41
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62bb42b19c2385542be7d865c3c4bf3f
+      internalID: -498195319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -825,6 +847,7 @@ TextureImporter:
       big_hill: -1214603271
       brownFloor: 1094453920
       castle: 249663380
+      castleHelper: -498195319
       coin: 263555830
       coin-spin2: -1721966518
       coin-spin3: -1961781012
